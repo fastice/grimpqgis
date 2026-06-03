@@ -155,11 +155,12 @@ class QgisGrimpProjectSetup:
             if not self.fileFound(urlFile, productFamily):
                 continue  # Skip this url if no match
             # Passed all tests, so add to list
-            option = ''
             if urlFile.endswith('tif'):
-                option = '?list_dir=no'
-            # print(url)
-            foundUrls.append(f'/vsicurl/{option}&url={url}')
+                # ?list_dir=no suppresses GDAL directory listing for COG files
+                foundUrls.append(f'/vsicurl/?list_dir=no&url={url}')
+            else:
+                # Shapefiles: pass the URL directly without query parameters
+                foundUrls.append(f'/vsicurl/{url}')
         return foundUrls
 
     def getProducts(self, productFamily, urls=None):

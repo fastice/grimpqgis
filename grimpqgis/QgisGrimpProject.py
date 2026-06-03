@@ -85,7 +85,7 @@ class QgisGrimpProject:
                   'xmax': 850000, 'ymax': -695000}
         # Overwrite with keywords if specified
         for key in kwargs.keys():
-            if key in list(extent.keys):
+            if key in list(extent.keys()):
                 extent[key] = kwargs[key]
         # Set extent
         self.canvas.setExtent(qc.QgsRectangle(extent['xmin'], extent['ymin'],
@@ -243,7 +243,7 @@ class QgisGrimpProject:
         return layer
 
     def _addVectorLayer(self, product, name):
-        ''' Create raster layer and set display options'''
+        ''' Create vector layer with basic styling'''
         # print(name, product)
         layer = qc.QgsVectorLayer(product, name, 'ogr')  # Vector layer
         symbol = layer.renderer().symbol()
@@ -396,7 +396,7 @@ class QgisGrimpProject:
         # print(myStyle.colorRampNames())
         if colorTable not in myStyle.colorRampNames():
             print(f'Warning: colortable {colorTable} not in '
-                  '{myStyle.colorRampNames()}.\n No color table Applied')
+                  f'{myStyle.colorRampNames()}.\n No color table Applied')
             return
         # Proceed with valid color table
         ramp = myStyle.colorRamp(colorTable)
